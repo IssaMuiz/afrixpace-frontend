@@ -4,36 +4,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { categories } from "@/constant";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 interface SidebarProps {
   isOpen: boolean;
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
-const Sidebar = ({ isOpen, setIsSidebarOpen }: SidebarProps) => {
-  const sidebarRef = useRef<HTMLDivElement | null>(null);
-
+const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
+    const handleOustiseClick = (event: MouseEvent) => {
       if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node)
+        isOpen &&
+        !document.getElementById("sidebar")?.contains(event.target as Node)
       ) {
-        setIsSidebarOpen(false);
+        onClose();
       }
     };
 
-    document.addEventListener("click", handleOutsideClick);
-    return () => document.removeEventListener("click", handleOutsideClick);
-  }, [isOpen, setIsSidebarOpen]);
-
+    document.addEventListener("mousedown", handleOustiseClick);
+    return () => document.removeEventListener("mousedown", handleOustiseClick);
+  }, [isOpen, onClose]);
   const pathname = usePathname();
   return (
     <aside
-      ref={sidebarRef}
+      id="sidebar"
       className={cn(
-        "fixed top-[61px] left-0 bottom-0 w-72 border-r bg-white border-gray-200 h-screen dark:bg-gray-900 px-4 pt-12 transition-transform xl:z-0 z-50  xl:translate-x-0",
+        "fixed hidden xl:block top-14 left-0 bottom-0 w-72 border-r border-gray-200 h-screen dark:bg-gray-900 px-4 pt-12",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}
     >
@@ -41,7 +38,6 @@ const Sidebar = ({ isOpen, setIsSidebarOpen }: SidebarProps) => {
         {categories.map((cat) => (
           <li key={cat.name}>
             <Link
-              onClick={() => setIsSidebarOpen(false)}
               href={`/${cat.path}`}
               className={cn(
                 "flex items-center gap-3 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition",

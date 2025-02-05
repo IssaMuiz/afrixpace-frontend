@@ -7,16 +7,16 @@ import { BellIcon } from "lucide-react";
 import { UserCircle } from "lucide-react";
 import { PlusCircle } from "lucide-react";
 
-const Navbar = ({
-  setIsSidebarOpen,
-}: {
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+interface NavbarProps {
+  onMenuClick: () => void;
+}
+
+const Navbar = ({ onMenuClick }: NavbarProps) => {
   return (
     <nav className="border-b bg-white z-20 fixed left-0 right-0 top-0 border-gray-200 px-4 py-3 flex justify-between items-center">
       <div className="flex space-x-3 items-center">
         <Button
-          onClick={() => setIsSidebarOpen((prev) => !prev)}
+          onClick={onMenuClick}
           className="xl:hidden block hover:bg-gray-300 rounded-full  cursor-pointer border-none shadow-none p-1"
           variant="outline"
         >

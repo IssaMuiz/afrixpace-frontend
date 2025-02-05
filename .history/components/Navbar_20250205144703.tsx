@@ -10,7 +10,7 @@ import { PlusCircle } from "lucide-react";
 const Navbar = ({
   setIsSidebarOpen,
 }: {
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSidebarOpen: (value: boolean) => void;
 }) => {
   return (
     <nav className="border-b bg-white z-20 fixed left-0 right-0 top-0 border-gray-200 px-4 py-3 flex justify-between items-center">

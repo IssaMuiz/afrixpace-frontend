@@ -7,21 +7,11 @@ import { BellIcon } from "lucide-react";
 import { UserCircle } from "lucide-react";
 import { PlusCircle } from "lucide-react";
 
-const Navbar = ({
-  setIsSidebarOpen,
-}: {
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const Navbar = () => {
   return (
-    <nav className="border-b bg-white z-20 fixed left-0 right-0 top-0 border-gray-200 px-4 py-3 flex justify-between items-center">
+    <nav className="border-b bg-white z-20 fixed left-0 right-0 top-0 border-gray-200 px-6 py-3 flex justify-between items-center">
       <div className="flex space-x-3 items-center">
-        <Button
-          onClick={() => setIsSidebarOpen((prev) => !prev)}
-          className="xl:hidden block hover:bg-gray-300 rounded-full  cursor-pointer border-none shadow-none p-1"
-          variant="outline"
-        >
-          <Menu className="min-h-7 min-w-7" />
-        </Button>
+        <Menu className="xl:hidden block" />
         <h1 className="lg:hidden block text-2xl font-semibold">A</h1>
         <h1 className="text-xl font-semibold hidden lg:flex">Adventures</h1>
       </div>
@@ -34,24 +24,24 @@ const Navbar = ({
         />
       </div>
 
-      <div className=" flex space-x-2">
+      <div className=" flex space-x-3">
         <Button
-          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1 "
+          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-2 "
           variant="outline"
         >
-          <BellIcon className="min-h-7 min-w-7" />
+          <BellIcon className="min-h-6 min-w-6" />
         </Button>
         <Button
-          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1"
+          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-2 "
           variant="outline"
         >
-          <PlusCircle className="min-h-7 min-w-7" />
+          <PlusCircle className="min-h-6 min-w-6" />
         </Button>
         <Button
-          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1"
+          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-2 "
           variant="outline"
         >
-          <UserCircle className="min-h-7 min-w-7" />
+          <UserCircle className="min-h-6 min-w-6" />
         </Button>
 
         {/* <Button variant="outline" className="hover:bg-gray-100">
