@@ -7,8 +7,8 @@ import { ShareIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface VoteProps {
-  postId: string | undefined;
-  votes: number | undefined;
+  postId: string;
+  votes: number;
 }
 
 const Vote = ({ postId, votes }: VoteProps) => {

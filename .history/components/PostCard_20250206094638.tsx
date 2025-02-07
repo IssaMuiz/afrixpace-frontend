@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 
 import Vote from "./Vote";
+import CommentSection from "./CommentSection";
 
 interface PostProps {
   post: {
@@ -49,6 +50,7 @@ const PostCard = ({ post }: PostProps) => {
         <Vote postId={post.id} votes={post.votes} />
       </CardFooter>
 
+      <CommentSection />
     </Card>
   );
 };
