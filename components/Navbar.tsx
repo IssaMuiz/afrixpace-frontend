@@ -34,24 +34,38 @@ const Navbar = ({
         />
       </div>
 
-      <div className=" flex space-x-2">
+      <div className=" flex space-x-2 lg:space-x-4 items-center">
         <Button
-          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1 "
+          className="relative hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1 group"
           variant="outline"
         >
           <BellIcon className="min-h-7 min-w-7" />
+          <span className="absolute -top-1 right-0 text-white rounded-full h-5 w-5 bg-red-500">
+            3
+          </span>
+          <span className="absolute left-1/2 -translate-x-1/2 top-12 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-transform pointer-events-none">
+            Notification
+          </span>
         </Button>
+
         <Button
-          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1"
+          className="relative hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1 group"
           variant="outline"
         >
           <PlusCircle className="min-h-7 min-w-7" />
+          <span className="absolute left-1/2 -translate-x-1/2 top-12 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-transform pointer-events-none text-nowrap">
+            Create Post
+          </span>
         </Button>
+
         <Button
-          className=" hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1"
+          className="relative hover:bg-gray-300 rounded-full cursor-pointer border-none shadow-none p-1 group"
           variant="outline"
         >
           <UserCircle className="min-h-7 min-w-7" />
+          <span className="absolute left-1/2 -translate-x-1/2 top-12 px-2 py-1 text-sm text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition-transform pointer-events-none">
+            Profile
+          </span>
         </Button>
 
         {/* <Button variant="outline" className="hover:bg-gray-100">
