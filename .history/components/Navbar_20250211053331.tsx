@@ -42,16 +42,10 @@ const Navbar = ({
         >
           <Menu className="min-h-7 min-w-7" />
         </Button>
-        <h1
-          onClick={() => router.push("/")}
-          className="lg:hidden block text-2xl font-semibold cursor-pointer text-red-500"
-        >
+        <h1 className="lg:hidden block text-2xl font-semibold text-red-500">
           A
         </h1>
-        <h1
-          onClick={() => router.push("/")}
-          className="text-4xl font-semibold hidden lg:flex text-red-500 cursor-pointer"
-        >
+        <h1 className="text-4xl font-semibold hidden lg:flex text-red-500">
           Mitty
         </h1>
       </div>

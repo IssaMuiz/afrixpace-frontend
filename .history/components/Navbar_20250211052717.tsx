@@ -21,6 +21,7 @@ const Navbar = ({
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [user] = useState({
     username: "johndoe",
     avatar:
@@ -28,6 +29,8 @@ const Navbar = ({
   });
 
   const handleSignOut = async () => {
+    setLoading(true);
+
     setTimeout(() => {
       router.push("/login");
     }, 1500);
@@ -42,16 +45,10 @@ const Navbar = ({
         >
           <Menu className="min-h-7 min-w-7" />
         </Button>
-        <h1
-          onClick={() => router.push("/")}
-          className="lg:hidden block text-2xl font-semibold cursor-pointer text-red-500"
-        >
+        <h1 className="lg:hidden block text-2xl font-semibold text-red-500">
           A
         </h1>
-        <h1
-          onClick={() => router.push("/")}
-          className="text-4xl font-semibold hidden lg:flex text-red-500 cursor-pointer"
-        >
+        <h1 className="text-4xl font-semibold hidden lg:flex text-red-500">
           Mitty
         </h1>
       </div>
@@ -90,14 +87,13 @@ const Navbar = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-52 mt-3 shadow-lg flex flex-col p-4 gap-3 bg-white mb rounded-md">
             <DropdownMenuItem
-              className="cursor-pointer rounded-md hover:bg-gray-100 p-2"
               onClick={() => router.push(`/profile/${user.username}`)}
             >
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="cursor-pointer text-red-500 rounded-md hover:bg-gray-100 p-2"
+              className="cursor-pointer text-red-500 hover:bg-red-300"
             >
               Logout
             </DropdownMenuItem>

@@ -10,26 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { login, signup } from "@/services/auth";
+import { login } from "@/services/auth";
 
-const authSchema = (type: "login" | "signup") => {
-  return type === "signup"
-    ? z.object({
-        name: z.string().min(2, "Name is required").optional(),
-        email: z.string().email("Invalid email format"),
-        password: z.string().min(6, "Password must be at least 6 characters"),
-      })
-    : z.object({
-        email: z.string().email("Invalid email format"),
-        password: z.string().min(6, "Password must be at least 6 characters"),
-      });
-};
+const authSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 7 characters"),
+  ...(process.env.NEXT_PUBLIC_SIGNUP
+    ? { name: z.string().min(2, "Name is required") }
+    : {}),
+});
 
-type AuthFormData = {
-  name?: string;
-  email: string;
-  password: string;
-};
+type AuthFormData = z.infer<typeof authSchema>;
 
 const AuthForm = ({ type }: { type: "login" | "signup" }) => {
   const [loading, setLoading] = useState(false);
@@ -39,21 +30,17 @@ const AuthForm = ({ type }: { type: "login" | "signup" }) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AuthFormData>({ resolver: zodResolver(authSchema(type)) });
+  } = useForm<AuthFormData>({ resolver: zodResolver(authSchema) });
 
   const onSubmit = async (data: AuthFormData) => {
     try {
       setLoading(true);
-      if (type === "login") {
-        const res = await login(data.email, data.password);
-
+      const res = await login(data.email, data.password);
+      setTimeout(() => {
         console.log("User log in:", res);
 
         router.push("/");
-      } else {
-        const res = await signup(data.name!, data.email, data.password);
-        console.log("User signed up:", res);
-      }
+      }, 1500);
     } catch (error) {
       console.error("Invalid credentials", error);
     }
