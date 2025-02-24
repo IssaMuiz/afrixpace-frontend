@@ -6,6 +6,7 @@ import Image from "next/image";
 import { categoryImageHeader } from "@/constant";
 import { getPostByCategories } from "@/services/post";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 
 interface Post {
   _id: string;
@@ -26,6 +27,7 @@ interface Post {
 export default function CategoryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [nextCursor, setNextCursor] = useState(null);
   const { slug } = useParams();
 
   const categoryParam = slug ? slug.toString() : "default";
@@ -36,12 +38,13 @@ export default function CategoryPage() {
     if (!slug) return;
 
     if (slug) {
-      async function fetchPost() {
+      async function fetchPost(cursor: string | undefined = undefined) {
         try {
           setLoading(true);
-          const res = await getPostByCategories(slug as string);
+          const res = await getPostByCategories(slug as string, cursor, 10);
 
-          setPosts(Array.isArray(res.data) ? res.data : []);
+          setPosts(cursor ? [...posts, ...res.posts] : res.posts);
+          setNextCursor(res.nextCursor);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching category post", error);
@@ -49,7 +52,7 @@ export default function CategoryPage() {
       }
       fetchPost();
     }
-  }, [slug]);
+  }, [slug, posts]);
 
   return (
     <section className="space-y-6 mt-20">
@@ -72,6 +75,14 @@ export default function CategoryPage() {
           posts.map((post) => <PostCard key={post._id} post={post} />)
         )}
       </div>
+      {nextCursor && (
+        <Button
+          className="bg-blue-500 text-white px-4 py-2 mt-4"
+          onClick={pass}
+        >
+          Load More
+        </Button>
+      )}
     </section>
   );
 }

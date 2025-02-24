@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { headers } from "next/headers";
 import api from "./api";
 
 export const createPost = async (formData: FormData): Promise<any> => {
@@ -88,16 +89,11 @@ export const downvotePost = async (postId: string) => {
   }
 };
 
-export const getPostByCategories = async (
-  category: string,
-  lastPostId?: string,
-  limit = 10
-) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("User is not authenticated");
+export const getPostByCategories = async () => {
   try {
+    const token = localStorage.getItem("token");
+
     const response = await api.get("/post/category", {
-      params: { category, lastPostId, limit },
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -25,7 +25,8 @@ interface Post {
 
 export default function CategoryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [nextCursor, setNextCursor] = useState(null);
   const { slug } = useParams();
 
   const categoryParam = slug ? slug.toString() : "default";
@@ -36,12 +37,13 @@ export default function CategoryPage() {
     if (!slug) return;
 
     if (slug) {
-      async function fetchPost() {
+      async function fetchPost(cursor = null) {
         try {
           setLoading(true);
           const res = await getPostByCategories(slug as string);
 
-          setPosts(Array.isArray(res.data) ? res.data : []);
+          setPosts((prev) => (cursor ? [...prev, ...res.data] : res.data));
+          setNextCursor(res.nextCursor);
           setLoading(false);
         } catch (error) {
           console.error("Error fetching category post", error);

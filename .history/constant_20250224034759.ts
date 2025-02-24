@@ -1,6 +1,11 @@
-import { Globe, BriefcaseBusinessIcon } from "lucide-react";
+import { Home, Globe, BriefcaseBusinessIcon } from "lucide-react";
 
 export const categories = [
+  {
+    name: "Home",
+    icon: Home,
+    path: "/",
+  },
   {
     name: "Entrepreneurship",
     icon: BriefcaseBusinessIcon,

@@ -93,14 +93,9 @@ export const getPostByCategories = async (
   lastPostId?: string,
   limit = 10
 ) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("User is not authenticated");
   try {
-    const response = await api.get("/post/category", {
+    const response = await api.get("post/category", {
       params: { category, lastPostId, limit },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
 
     return response.data;

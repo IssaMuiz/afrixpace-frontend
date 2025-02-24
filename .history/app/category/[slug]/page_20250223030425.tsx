@@ -25,23 +25,25 @@ interface Post {
 
 export default function CategoryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { slug } = useParams();
 
   const categoryParam = slug ? slug.toString() : "default";
 
+  const category = Array.isArray(slug) ? slug[0] : slug || "";
+
   const imageCategory = categoryImageHeader[categoryParam];
 
   useEffect(() => {
-    if (!slug) return;
+    if (!category) return;
 
-    if (slug) {
-      async function fetchPost() {
+    if (category) {
+      async function fetchPost(lastPostId = "") {
         try {
           setLoading(true);
-          const res = await getPostByCategories(slug as string);
+          const res = await getPostByCategories(category, lastPostId);
 
-          setPosts(Array.isArray(res.data) ? res.data : []);
+          setPosts((prev) => (lastPostId ? [...prev, ...res.data] : res.data));
           setLoading(false);
         } catch (error) {
           console.error("Error fetching category post", error);
@@ -49,7 +51,7 @@ export default function CategoryPage() {
       }
       fetchPost();
     }
-  }, [slug]);
+  }, [category]);
 
   return (
     <section className="space-y-6 mt-20">
@@ -61,7 +63,7 @@ export default function CategoryPage() {
           width={130}
           className="rounded-sm"
         />
-        <h1 className=" text-xl">{slug}</h1>
+        <h1 className=" text-xl">{category}</h1>
       </div>
       <div className="space-y-6 mt-20">
         {loading ? (

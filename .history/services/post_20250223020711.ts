@@ -90,18 +90,20 @@ export const downvotePost = async (postId: string) => {
 
 export const getPostByCategories = async (
   category: string,
-  lastPostId?: string,
-  limit = 10
+  lastPostId: string,
+  limit: string
 ) => {
-  const token = localStorage.getItem("token");
-  if (!token) throw new Error("User is not authenticated");
   try {
-    const response = await api.get("/post/category", {
-      params: { category, lastPostId, limit },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const token = localStorage.getItem("token");
+
+    const response = await api.get(
+      `posts?category=${category}=${lastPostId}=${limit} `,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (error: any) {

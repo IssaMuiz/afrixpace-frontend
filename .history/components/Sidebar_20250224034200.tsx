@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { categories } from "@/constant";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
-import { Home } from "lucide-react";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -39,19 +38,6 @@ const Sidebar = ({ isOpen, setIsSidebarOpen }: SidebarProps) => {
       )}
     >
       <ul className="space-y-2">
-        <li>
-          <Link
-            onClick={() => setIsSidebarOpen(false)}
-            href="/"
-            className={cn(
-              "flex items-center gap-3 p-3 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800 transition ",
-              pathname === `/` && "bg-gray-300 dark:bg-gray-700 font-semibold"
-            )}
-          >
-            <Home className="w-5 h-5" />
-            <span>Home</span>
-          </Link>
-        </li>
         {categories.map((cat) => (
           <li key={cat.name}>
             <Link

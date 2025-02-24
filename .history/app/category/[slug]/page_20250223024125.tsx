@@ -1,7 +1,7 @@
 "use client";
 import PostCard from "@/components/PostCard";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import { categoryImageHeader } from "@/constant";
 import { getPostByCategories } from "@/services/post";
@@ -25,8 +25,9 @@ interface Post {
 
 export default function CategoryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { slug } = useParams();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { slug } = router.query;
 
   const categoryParam = slug ? slug.toString() : "default";
 
@@ -36,12 +37,12 @@ export default function CategoryPage() {
     if (!slug) return;
 
     if (slug) {
-      async function fetchPost() {
+      async function fetchPost(lastPostId = "") {
         try {
           setLoading(true);
-          const res = await getPostByCategories(slug as string);
+          const res = await getPostByCategories(slug, lastPostId);
 
-          setPosts(Array.isArray(res.data) ? res.data : []);
+          setPosts((prev) => (lastPostId ? [...prev, ...res.data] : res.data));
           setLoading(false);
         } catch (error) {
           console.error("Error fetching category post", error);
@@ -51,6 +52,7 @@ export default function CategoryPage() {
     }
   }, [slug]);
 
+  if (!slug) return <div>Loading...</div>;
   return (
     <section className="space-y-6 mt-20">
       <div className=" w-full flex gap-3 items-center bg-white p-3 border border-gray-100 rounded-md">
