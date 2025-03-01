@@ -16,7 +16,7 @@ const RepliesList = ({ replies }: ReplyType) => {
   return (
     <div>
       {replies && replies.length > 0 && (
-        <div className="space-y-3 my-3 pl-6 border-l-2 bg-white border-gray-300 ml-8">
+        <div className="space-y-3 mt-2 pl-6 border-l-2 bg-white border-gray-300 ml-5">
           {replies.map((reply) => (
             <div
               key={reply._id}

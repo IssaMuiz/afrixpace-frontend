@@ -57,7 +57,6 @@ export const addReply = async (
   }
 ) => {
   const token = localStorage.getItem("token");
-  console.log("parentcomment id", replyData.parentCommentId);
   try {
     const res = await api.post(`/comment/${postId}/reply`, replyData, {
       headers: {

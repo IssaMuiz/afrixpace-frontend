@@ -80,60 +80,52 @@ const CommentList = ({ comments, setComments, postId }: CommentProps) => {
         <p>No comments yet</p>
       ) : (
         comments.map((comment) => (
-          <div key={comment._id} className="mb-3">
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2">
+          <div key={comment._id}>
+            <div className="flex gap-2">
+              <div>
                 <div className="mb-2">
                   <UserAvatar username={comment.userId.username} />
                 </div>
-                <div>
-                  <span className="font-semibold">
-                    {comment.userId.username}
-                  </span>
+                <span className="font-semibold">{comment.userId.username}</span>
 
-                  <p className="text-sm text-gray-700">{comment.content}</p>
-                  <div className="flex gap-2 items-center mt-2">
-                    <div className="flex gap-2 items-center">
-                      <Button
-                        className={`${
-                          voteStatus === "upvotes" &&
-                          "bg-green-600 hover:bg-green-700 "
-                        } h-5 w-5`}
-                        variant="outline"
-                        onClick={() => handleVote("upvotes")}
-                      >
-                        <ArrowBigUp
-                          className={`${
-                            voteStatus === "upvotes" && "text-white"
-                          } min-h-3 min-w-3`}
-                        />
-                      </Button>
-                      <span className="text-sm">{voteCount}</span>
-                      <Button
-                        className={`${
-                          voteStatus === "downvotes" &&
-                          "bg-red-600 hover:bg-red-700"
-                        } h-5 w-5`}
-                        variant="outline"
-                        onClick={() => handleVote("downvotes")}
-                      >
-                        <ArrowBigDown
-                          className={`${
-                            voteStatus === "downvotes" && "text-white"
-                          } min-h-3 min-w-3`}
-                        />
-                      </Button>
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        className="text-blue-600 text-xs hover:underline h-5 w-5"
-                        onClick={() => toggleShowReply(comment._id)}
-                      >
-                        Reply
-                      </button>
-                    </div>
-                  </div>
+                <p className="text-sm text-gray-700">{comment.content}</p>
+                <div className="flex gap-2 items-center mt-2">
+                  <button
+                    type="button"
+                    className="text-blue-600 text-xs mt-2 hover:underline"
+                    onClick={() => toggleShowReply(comment._id)}
+                  >
+                    Reply
+                  </button>
+                  <Button
+                    className={`${
+                      voteStatus === "upvotes" &&
+                      "bg-green-600 hover:bg-green-700 h-5 w-5"
+                    } `}
+                    variant="outline"
+                    onClick={() => handleVote("upvotes")}
+                  >
+                    <ArrowBigUp
+                      className={`${
+                        voteStatus === "upvotes" && "text-white"
+                      } min-h-3 min-w-3`}
+                    />
+                  </Button>
+                  <span className="text-sm">{voteCount}</span>
+                  <Button
+                    className={`${
+                      voteStatus === "downvotes" &&
+                      "bg-red-600 hover:bg-red-700 h-5 w-5"
+                    } h-5 w-5`}
+                    variant="outline"
+                    onClick={() => handleVote("downvotes")}
+                  >
+                    <ArrowBigDown
+                      className={`${
+                        voteStatus === "downvotes" && "text-white"
+                      } min-h-3 min-w-3`}
+                    />
+                  </Button>
                 </div>
               </div>
 

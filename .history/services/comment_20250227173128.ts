@@ -40,7 +40,7 @@ export const getComment = async (
       }
     );
 
-    return response.data.comments;
+    return response.data;
   } catch (error: any) {
     console.error(
       "Error getting comment",

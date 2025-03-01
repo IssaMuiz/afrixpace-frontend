@@ -80,7 +80,7 @@ const CommentList = ({ comments, setComments, postId }: CommentProps) => {
         <p>No comments yet</p>
       ) : (
         comments.map((comment) => (
-          <div key={comment._id} className="mb-3">
+          <div key={comment._id}>
             <div className="flex flex-col gap-2">
               <div className="flex gap-2">
                 <div className="mb-2">
@@ -97,8 +97,8 @@ const CommentList = ({ comments, setComments, postId }: CommentProps) => {
                       <Button
                         className={`${
                           voteStatus === "upvotes" &&
-                          "bg-green-600 hover:bg-green-700 "
-                        } h-5 w-5`}
+                          "bg-green-600 hover:bg-green-700 h-5 w-5"
+                        } `}
                         variant="outline"
                         onClick={() => handleVote("upvotes")}
                       >
@@ -125,13 +125,13 @@ const CommentList = ({ comments, setComments, postId }: CommentProps) => {
                       </Button>
                     </div>
                     <div>
-                      <button
-                        type="button"
+                      <Button
                         className="text-blue-600 text-xs hover:underline h-5 w-5"
+                        variant="outline"
                         onClick={() => toggleShowReply(comment._id)}
                       >
                         Reply
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>

@@ -97,8 +97,8 @@ const CommentList = ({ comments, setComments, postId }: CommentProps) => {
                       <Button
                         className={`${
                           voteStatus === "upvotes" &&
-                          "bg-green-600 hover:bg-green-700 "
-                        } h-5 w-5`}
+                          "bg-green-600 hover:bg-green-700 h-5 w-5"
+                        } `}
                         variant="outline"
                         onClick={() => handleVote("upvotes")}
                       >

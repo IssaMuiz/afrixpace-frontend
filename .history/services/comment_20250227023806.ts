@@ -49,21 +49,18 @@ export const getComment = async (
   }
 };
 
-export const addReply = async (
-  postId: string,
-  replyData: {
-    content: string;
-    parentCommentId: string;
-  }
-) => {
+export const addReply = async (content: string, parentCommentId: string) => {
   const token = localStorage.getItem("token");
-  console.log("parentcomment id", replyData.parentCommentId);
   try {
-    const res = await api.post(`/comment/${postId}/reply`, replyData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await api.post(
+      `/comment/reply`,
+      { content, parentCommentId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return res.data.reply;
   } catch (error: any) {

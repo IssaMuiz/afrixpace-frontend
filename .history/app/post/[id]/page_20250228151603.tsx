@@ -14,11 +14,12 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import PostFooter from "@/components/PostFooter";
+import Vote from "@/components/Vote";
 import UserAvatar from "@/components/UserAvatar";
 import CommentList from "@/components/CommentList";
 import { getAllPosts } from "@/services/post";
 import { addComment, getComment } from "@/services/comment";
+import { comment } from "postcss";
 
 export interface CommentType {
   _id: string;
@@ -87,7 +88,7 @@ const PostPage = () => {
   const fetchComments = async () => {
     try {
       const response = await getComment(id as string, skip, limit);
-      console.log("Comment response:", response);
+      console.log("Comment response:", JSON.stringify(response, null, 2));
       if (response) {
         setComments(response);
       } else {
@@ -168,7 +169,7 @@ const PostPage = () => {
           )}
         </CardContent>
         <CardFooter className="w-full max-w-lg">
-          <PostFooter
+          <Vote
             postId={post?._id}
             votesCount={post?.votesCount}
             userVote={post?.userVote}

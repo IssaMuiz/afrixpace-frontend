@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import PostFooter from "@/components/PostFooter";
+import Vote from "@/components/Vote";
 import UserAvatar from "@/components/UserAvatar";
 import CommentList from "@/components/CommentList";
 import { getAllPosts } from "@/services/post";
@@ -28,7 +28,7 @@ export interface CommentType {
   };
   postId: string;
   content: string;
-  replies: CommentType[];
+  replies: any[];
   parentComment?: string;
 }
 
@@ -88,12 +88,28 @@ const PostPage = () => {
     try {
       const response = await getComment(id as string, skip, limit);
       console.log("Comment response:", response);
+
       if (response) {
-        setComments(response);
+        const commentMap: { [key: string]: CommentType } = {};
+        const topLevelComments: CommentType[] = [];
+        response.forEach((comment: CommentType) => {
+          comment.replies = [];
+
+          commentMap[comment._id] = comment;
+          if (comment.parentComment) {
+            if (commentMap[comment.parentComment]) {
+              commentMap[comment.parentComment].replies.push(comment);
+            }
+          } else {
+            topLevelComments.push(comment);
+          }
+        });
+
+        setComments(topLevelComments);
       } else {
         setComments((prev) => [...prev, ...response]);
-        setSkip((prev) => prev + limit);
       }
+      setSkip((prev) => prev + limit);
     } catch (error) {
       console.error("Error fetching post:", error);
     } finally {
@@ -104,10 +120,6 @@ const PostPage = () => {
   useEffect(() => {
     fetchComments();
   }, [id]);
-
-  useEffect(() => {
-    console.log("updated comment", comments);
-  }, [comments]);
 
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -168,7 +180,7 @@ const PostPage = () => {
           )}
         </CardContent>
         <CardFooter className="w-full max-w-lg">
-          <PostFooter
+          <Vote
             postId={post?._id}
             votesCount={post?.votesCount}
             userVote={post?.userVote}

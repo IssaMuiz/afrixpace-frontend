@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import PostFooter from "@/components/PostFooter";
+import Vote from "@/components/Vote";
 import UserAvatar from "@/components/UserAvatar";
 import CommentList from "@/components/CommentList";
 import { getAllPosts } from "@/services/post";
@@ -28,7 +28,7 @@ export interface CommentType {
   };
   postId: string;
   content: string;
-  replies: CommentType[];
+  replies: any[];
   parentComment?: string;
 }
 
@@ -105,10 +105,6 @@ const PostPage = () => {
     fetchComments();
   }, [id]);
 
-  useEffect(() => {
-    console.log("updated comment", comments);
-  }, [comments]);
-
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!commentText.trim()) return;
@@ -168,7 +164,7 @@ const PostPage = () => {
           )}
         </CardContent>
         <CardFooter className="w-full max-w-lg">
-          <PostFooter
+          <Vote
             postId={post?._id}
             votesCount={post?.votesCount}
             userVote={post?.userVote}
