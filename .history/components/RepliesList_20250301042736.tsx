@@ -51,10 +51,30 @@ const RepliesList = ({ replies }: ReplyType) => {
       {replies && replies.length > 0 && (
         <div className="space-y-3 my-3 pl-6 border-l-2 bg-white border-gray-300 ml-8">
           {replies.map((reply) => (
-            <div key={reply._id} className="flex flex-col gap-3 p-2 border-b">
-              <div className="flex gap-2">
+            <div
+              key={reply._id}
+              className="flex items-center gap-3 p-2 border-b"
+            >
+              {showReply === reply._id && (
+                <div className="mt-2 flex items-center gap-2 mb-5">
+                  <Textarea
+                    placeholder="reply..."
+                    value={replyText[reply._id] || ""}
+                    onChange={(e) =>
+                      setReplyText((prev) => ({
+                        ...prev,
+                        [reply._id]: e.target.value,
+                      }))
+                    }
+                  />
+                  <Button onClick={() => handleAddReply(reply._id)}>
+                    Reply
+                  </Button>
+                </div>
+              )}
+              <div>
                 <UserAvatar username={reply.userId.username} />
-                <div className="">
+                <div className="flex flex-col ">
                   <span className="font-semibold">{reply.userId.username}</span>
                   <p className="text-xs">{reply.content}</p>
                   <div className="flex gap-2 items-center mt-2">
@@ -101,23 +121,6 @@ const RepliesList = ({ replies }: ReplyType) => {
                   </div>
                 </div>
               </div>
-              {showReply === reply._id && (
-                <div className="mt-2 flex items-center gap-2 mb-5">
-                  <Textarea
-                    placeholder="reply..."
-                    value={replyText[reply._id] || ""}
-                    onChange={(e) =>
-                      setReplyText((prev) => ({
-                        ...prev,
-                        [reply._id]: e.target.value,
-                      }))
-                    }
-                  />
-                  <Button onClick={() => handleAddReply(reply._id)}>
-                    Reply
-                  </Button>
-                </div>
-              )}
             </div>
           ))}
         </div>

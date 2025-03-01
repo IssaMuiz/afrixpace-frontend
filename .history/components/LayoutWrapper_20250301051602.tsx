@@ -20,7 +20,7 @@ export default function LayoutWrapper({
   const router = useRouter();
 
   useEffect(() => {
-    const user = localStorage.getItem("token");
+    const user = localStorage.getItems("token");
 
     if (!user) {
       router.replace("/auth/login");
@@ -28,15 +28,15 @@ export default function LayoutWrapper({
       setAuthenticated(true);
       setLoading(false);
     }
-  }, []);
+  });
 
   const isAuthPage = pathname.startsWith("/auth");
+
+  if (loading) return null;
 
   if (isAuthPage) {
     return <>{children}</>;
   }
-
-  if (loading) return null;
 
   return (
     <div>
@@ -46,7 +46,7 @@ export default function LayoutWrapper({
           isSidebarOpen ? "opacity-100 visible" : "opacity-0 invisible"
         )}
       ></div>
-      {authenticated && <Navbar setIsSidebarOpen={setIsSidebarOpen} />}
+      <Navbar setIsSidebarOpen={setIsSidebarOpen} />
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px]  h-screen p-2 lg:p-4">
         <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
         <AdvertBar />

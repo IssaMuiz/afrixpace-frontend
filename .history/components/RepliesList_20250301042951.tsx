@@ -51,8 +51,28 @@ const RepliesList = ({ replies }: ReplyType) => {
       {replies && replies.length > 0 && (
         <div className="space-y-3 my-3 pl-6 border-l-2 bg-white border-gray-300 ml-8">
           {replies.map((reply) => (
-            <div key={reply._id} className="flex flex-col gap-3 p-2 border-b">
-              <div className="flex gap-2">
+            <div
+              key={reply._id}
+              className="flex flex-col items-center gap-3 p-2 border-b"
+            >
+              {showReply === reply._id && (
+                <div className="mt-2 flex items-center gap-2 mb-5">
+                  <Textarea
+                    placeholder="reply..."
+                    value={replyText[reply._id] || ""}
+                    onChange={(e) =>
+                      setReplyText((prev) => ({
+                        ...prev,
+                        [reply._id]: e.target.value,
+                      }))
+                    }
+                  />
+                  <Button onClick={() => handleAddReply(reply._id)}>
+                    Reply
+                  </Button>
+                </div>
+              )}
+              <div className="flex flex-col ">
                 <UserAvatar username={reply.userId.username} />
                 <div className="">
                   <span className="font-semibold">{reply.userId.username}</span>
@@ -101,23 +121,6 @@ const RepliesList = ({ replies }: ReplyType) => {
                   </div>
                 </div>
               </div>
-              {showReply === reply._id && (
-                <div className="mt-2 flex items-center gap-2 mb-5">
-                  <Textarea
-                    placeholder="reply..."
-                    value={replyText[reply._id] || ""}
-                    onChange={(e) =>
-                      setReplyText((prev) => ({
-                        ...prev,
-                        [reply._id]: e.target.value,
-                      }))
-                    }
-                  />
-                  <Button onClick={() => handleAddReply(reply._id)}>
-                    Reply
-                  </Button>
-                </div>
-              )}
             </div>
           ))}
         </div>

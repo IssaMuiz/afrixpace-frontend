@@ -28,15 +28,15 @@ export default function LayoutWrapper({
       setAuthenticated(true);
       setLoading(false);
     }
-  }, []);
+  });
 
   const isAuthPage = pathname.startsWith("/auth");
+
+  if (loading) return null;
 
   if (isAuthPage) {
     return <>{children}</>;
   }
-
-  if (loading) return null;
 
   return (
     <div>

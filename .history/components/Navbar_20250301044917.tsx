@@ -30,7 +30,7 @@ const Navbar = ({
   const handleLogOut = async () => {
     localStorage.removeItem("token");
 
-    router.push("/auth/login");
+    router.push("/login");
   };
   return (
     <nav className="border-b bg-white z-20 fixed left-0 right-0 top-0 border-gray-200 px-4 py-3 flex justify-between items-center shadow-sm">
